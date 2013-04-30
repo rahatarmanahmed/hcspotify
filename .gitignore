@@ -18,7 +18,16 @@
 
 # I'm not really sure what this .sdf file is
 *.sdf
+*.opensdf
+*.suo
+*.vcxproj.user
+*.vcxproj.filters
+ipch/
 
 # Ignore stuff generated from build
-bin/
+bin/*
 tmp/
+
+# But lets keep the binaries because i dunno where else to host them
+!bin/hcspotify.dll
+!bin/hcspotify_x64.dll
