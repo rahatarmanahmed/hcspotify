@@ -32,7 +32,7 @@ static int spotify_cb(char *word[], char *word_eol[], void *userdata)
 				GetWindowText(hWnd, title, title_length);
 				if(strcmp(title, "Spotify") != 0)
 				{
-					hexchat_commandf(ph, "me is now listening to: %s", title + (10 * sizeof *title));
+					hexchat_commandf(ph, "me is now listening to: %s", title);
 				}
 				else
 				{
