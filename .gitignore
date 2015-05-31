@@ -1,5 +1,6 @@
 # Object files
 *.o
+*.obj
 
 # Libraries
 *.lib
@@ -23,11 +24,10 @@
 *.vcxproj.user
 *.vcxproj.filters
 ipch/
+*.pdb
 
 # Ignore stuff generated from build
-bin/*
+bin/
 tmp/
-
-# But lets keep the binaries because i dunno where else to host them
-!bin/hcspotify.dll
-!bin/hcspotify_x64.dll
+*.tlog
+*.log
