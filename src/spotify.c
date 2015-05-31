@@ -14,7 +14,7 @@
 static hexchat_plugin *ph;   /* plugin handle */
 static char name[] = "Spotify Now Playing";
 static char desc[] = "Sends currently playing song in Spotify to the current channel.";
-static char version[] = "0.1";
+static char version[] = "1.0";
 static const char helpmsg[] = "Sends currently playing song in Spotify to the current channel. USAGE: /spotify";
 
 static int spotify_cb(char *word[], char *word_eol[], void *userdata)
