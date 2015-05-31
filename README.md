@@ -10,4 +10,4 @@ Download the .dll from the [releases](https://github.com/rahatarmanahmed/hcspoti
 `/spotify`
 
 ### Example output
-    ` * rahatarmanahmed is now listening to: Arion – Cold Blood & Ice Cream Cones`
+    * rahatarmanahmed is now listening to: Arion – Cold Blood & Ice Cream Cones
