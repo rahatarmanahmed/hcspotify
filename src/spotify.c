@@ -1,9 +1,3 @@
-/*
-  Spotify Now Playing plugin
-  Original X-Chat source by S3NSA: http://forum.cheatengine.org/viewtopic.php?t=405073&sid=83516683cf425324e4596a993fcec09b
-  Rewritten for HexChat by Freek
-*/
-
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdlib.h>
