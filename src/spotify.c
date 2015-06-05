@@ -4,6 +4,7 @@
   Rewritten for HexChat by Freek
 */
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,46 +14,42 @@
 static hexchat_plugin *ph;   /* plugin handle */
 static char name[] = "Spotify Now Playing";
 static char desc[] = "Sends currently playing song in Spotify to the current channel.";
-static char version[] = "0.1";
+static char version[] = "1.0";
 static const char helpmsg[] = "Sends currently playing song in Spotify to the current channel. USAGE: /spotify";
-static const LPCTSTR SPOTIFY_CLASS_NAME = TEXT("SpotifyMainWindow");
 
 static int spotify_cb(char *word[], char *word_eol[], void *userdata)
 {
-	HWND hWnd = FindWindow(SPOTIFY_CLASS_NAME, NULL);
-	if(hWnd != NULL)
+	HWND hWnd = FindWindowW (L"SpotifyMainWindow", NULL);
+	wchar_t window_text[1024];
+
+	if (hWnd == NULL)
 	{
-		int title_length = GetWindowTextLength(hWnd);
-		if(title_length != 0)
-		{
-			char* title;
-			title = (char*)malloc((++title_length) * sizeof *title );
-			if(title != NULL)
-			{
-				GetWindowText(hWnd, title, title_length);
-				if(strcmp(title, "Spotify") != 0)
-				{
-					hexchat_commandf(ph, "me is now listening to: %s", title);
-				}
-				else
-				{
-					hexchat_print(ph, "Spotify is not playing anything right now.");
-				}
-			}
-			else
-			{
-				hexchat_print(ph, "Unable to allocate memory for title");
-			}
-			free(title);
-		}
-		else
-		{
-			hexchat_print(ph, "Unable to get Spotify window title.");
-		}
+		hexchat_print (ph, "Unable to find Spotify window.");
+		return HEXCHAT_EAT_ALL;
 	}
-	else
+
+	if (GetWindowTextW (hWnd, window_text, 1024))
 	{
-		hexchat_print(ph, "Unable to find Spotify window.");
+		char utf8_title[2048], *title = utf8_title;
+
+		if (wcscmp (window_text, L"Spotify") == 0)
+		{
+			hexchat_print (ph, "Spotify is not playing anything right now.");
+			return HEXCHAT_EAT_ALL;
+		}
+
+		/* UTF-16 to UTF-8 */
+		if (!WideCharToMultiByte (CP_UTF8, 0, window_text, -1, &utf8_title, sizeof(utf8_title), NULL, NULL))
+		{
+			hexchat_print (ph, "Failed to convert song title to utf8");
+			return HEXCHAT_EAT_ALL;
+		}
+
+		/* Older versions have a prefix */
+		if (strncmp (title, "Spotify - ", 10) == 0)
+			title += 10;
+
+		hexchat_commandf (ph, "me is now listening to: %s", title);
 	}
 	return HEXCHAT_EAT_ALL;
 }
